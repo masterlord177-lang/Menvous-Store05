@@ -205,7 +205,8 @@
     <div class="menu-btn">☰</div>
   </nav>
   <!-- Produk -->
-  <div class="section-title">🔥POPULER SEKARANG!</div>
+  <div class="section-title" style="margin-bottom: 0.3rem;">🔥POPULER SEKARANG!</div>
+  <p style="font-size: 0.8rem; color: #5a6f8f; padding: 0 1.5rem; margin-top: 0.1rem;">Berikut adalah beberapa produk yang paling populer saat ini</p>
   <div class="product-grid">
     <div class="product">
       <h3>AKUN ELEMENT</h3>
@@ -370,8 +371,29 @@
     }
 
     function hapusItem(index) {
+      // Dapatkan item yang akan dihapus
+      const itemDihapus = keranjang[index];
+      // Cari produk yang sesuai dalam daftarProduk
+      const produk = daftarProduk.find(p => p.nama === itemDihapus.nama && p.harga === itemDihapus.harga);
+      if (produk) {
+        produk.stok++; // Kembalikan stok
+        updateTombol(produk, getTombolProduk(itemDihapus.nama, itemDihapus.harga)); // Perbarui tampilan tombol
+      }
       keranjang.splice(index, 1);
       updateKeranjang();
+    }
+
+    function getTombolProduk(nama, harga) {
+      const produkElements = document.querySelectorAll('.product');
+      let tombolProduk = null;
+      produkElements.forEach(element => {
+        const h3 = element.querySelector('h3');
+        const p = element.querySelector('p');
+        if (h3.textContent === nama && p.textContent === `Rp ${harga.toLocaleString('id-ID')}`) {
+          tombolProduk = element.querySelector('button');
+        }
+      });
+      return tombolProduk;
     }
 
     function kirimWhatsApp() {
@@ -407,6 +429,13 @@
         tombol.style.color = "#fff";
         tombol.style.cursor = "not-allowed";
         tombol.style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.4)";
+      } else {
+        tombol.textContent = "Tambah";
+        tombol.disabled = false;
+        tombol.style.background = "#00c851";
+        tombol.style.color = "#fff";
+        tombol.style.cursor = "pointer";
+        tombol.style.boxShadow = "";
       }
     }
     // Inisialisasi tombol saat halaman dimuat
