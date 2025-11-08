@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,7 @@
       background: linear-gradient(90deg, #00c851, #00e676);
       padding: 1rem 1.5rem;
       color: white;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -105,7 +106,7 @@
       margin: 1.5rem;
       border-radius: 15px;
       padding: 1.5rem;
-      box-shadow: 0 4px 10px rgba(0,128,64,0.1);
+      box-shadow: 0 4px 10px rgba(0, 128, 64, 0.1);
     }
 
     label {
@@ -135,7 +136,7 @@
       border-radius: 12px;
       padding: 1rem;
       margin-top: 1rem;
-      box-shadow: 0 3px 8px rgba(0,128,64,0.1);
+      box-shadow: 0 3px 8px rgba(0, 128, 64, 0.1);
     }
 
     .cart-item {
@@ -196,93 +197,157 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <!-- Navbar -->
   <nav>
     <div class="logo">MENVOUS STORE</div>
     <div class="menu-btn">☰</div>
   </nav>
-
   <!-- Produk -->
   <div class="section-title">🛍️ Pilih Produk FishIt</div>
   <div class="product-grid">
-    <div class="product" data-stok="0">
+    <div class="product">
       <h3>AKUN ELEMENT</h3>
       <p>Rp 200.000</p>
-      <button onclick="tambahKeranjang('AKUN ELEMENT',200000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN ELEMENT',200000, this)">Tambah</button>
     </div>
-    <div class="product" data-stok="0">
+    <div class="product">
       <h3>AKUN GHOSTFINN</h3>
       <p>Rp 55.000</p>
-      <button onclick="tambahKeranjang('AKUN GHOSTFINN',55000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN GHOSTFINN',55000, this)">Tambah</button>
     </div>
-    <div class="product" data-stok="1">
+    <div class="product">
       <h3>AKUN GHOSTFINN</h3>
       <p>Rp 50.000</p>
-      <button onclick="tambahKeranjang('AKUN GHOSTFINN',50000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN GHOSTFINN',50000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
+    <div class="product">
       <h3>AKUN BAMBOO</h3>
       <p>Rp 45.000</p>
-      <button onclick="tambahKeranjang('AKUN BAMBOO',45000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN BAMBOO',45000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
-          <h3>AKUN ANGLER</h3>
+    <div class="product">
+      <h3>AKUN ANGLER</h3>
       <p>Rp 40.000</p>
-      <button onclick="tambahKeranjang('AKUN ANGLER',40000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN ANGLER',40000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
+    <div class="product">
       <h3>AKUN ARES</h3>
       <p>Rp 35.000</p>
-      <button onclick="tambahKeranjang('AKUN ARES',35000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN ARES',35000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
+    <div class="product">
       <h3>AKUN HAZMAT</h3>
       <p>Rp 30.000</p>
-      <button onclick="tambahKeranjang('AKUN HAZMAT',30000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN HAZMAT',30000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
+    <div class="product">
       <h3>AKUN ASTRAL</h3>
       <p>Rp 30.000</p>
-      <button onclick="tambahKeranjang('AKUN ASTRAL',30000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN ASTRAL',30000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
+    <div class="product">
       <h3>AKUN COIN FISH IT</h3>
       <p>Rp 20.000</p>
-      <button onclick="tambahKeranjang('COIN FISH IT',20000)">Tambah</button>
+      <button onclick="tambahKeranjang('AKUN COIN FISH IT',20000, this)">Tambah</button>
     </div>
-      <div class="product" data-stok="1">
+    <div class="product">
       <h3>SECRET TUMBAL</h3>
       <p>Rp 7.000</p>
-      <button onclick="tambahKeranjang('SECRET TUMBAL',7000)">Tambah</button>
+      <button onclick="tambahKeranjang('SECRET TUMBAL',7000, this)">Tambah</button>
     </div>
   </div>
-
   <!-- Form -->
   <div class="form-section">
     <h2>💾 Data Pembeli</h2>
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Contoh@gmail.com">
     <label>Nomor WhatsApp Kamu</label>
     <input type="tel" id="whatsapp" placeholder="08xxxxxxxxxx">
-
     <div class="cart" id="cart">
       <h3>🛒 Keranjang Belanja</h3>
       <div id="cartItems"></div>
       <div class="cart-total" id="cartTotal">Total: Rp 0</div>
     </div>
-
-    <button class="submit" onclick="kirimWhatsApp()">Kirim ke WhatsApp</button>
+    <button class="submit" onclick="kirimWhatsApp()">PESAN SEKARANG</button>
   </div>
-
   <footer>© 2025 MENVOUS STORE | All Rights Reserved</footer>
-
   <script>
     const keranjang = [];
     const adminWA = "6282364492977";
+    // Data produk dengan stok
+    const daftarProduk = [{
+        nama: 'AKUN ELEMENT',
+        harga: 200000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN GHOSTFINN',
+        harga: 55000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN GHOSTFINN',
+        harga: 50000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN BAMBOO',
+        harga: 45000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN ANGLER',
+        harga: 40000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN ARES',
+        harga: 35000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN HAZMAT',
+        harga: 30000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN ASTRAL',
+        harga: 30000,
+        stok: 1
+      },
+      {
+        nama: 'AKUN COIN FISH IT',
+        harga: 20000,
+        stok: 1
+      },
+      {
+        nama: 'SECRET TUMBAL',
+        harga: 7000,
+        stok: 1
+      }
+    ];
 
-    function tambahKeranjang(nama, harga) {
-      keranjang.push({ nama, harga });
-      updateKeranjang();
+    function tambahKeranjang(nama, harga, tombol) {
+      // Cari produk yang sesuai dalam daftarProduk
+      const produk = daftarProduk.find(p => p.nama === nama && p.harga === harga);
+      if (!produk) {
+        console.error("Produk tidak ditemukan:", nama, harga);
+        return;
+      }
+      // Periksa apakah stok masih tersedia
+      if (produk.stok > 0) {
+        keranjang.push({
+          nama,
+          harga
+        });
+        produk.stok--; // Kurangi stok
+        updateKeranjang();
+        updateTombol(produk, tombol); // Perbarui tampilan tombol
+      } else {
+        alert("Stok habis!");
+      }
     }
 
     function updateKeranjang() {
@@ -290,7 +355,6 @@
       const total = document.getElementById("cartTotal");
       list.innerHTML = "";
       let totalHarga = 0;
-
       keranjang.forEach((item, index) => {
         totalHarga += item.harga;
         const div = document.createElement("div");
@@ -298,7 +362,7 @@
         div.innerHTML = `
           <span>${item.nama}</span>
           <span>Rp ${item.harga.toLocaleString('id-ID')}</span>
-          <button class="cancel-btn" onclick="hapusItem(${index})">❌</button>
+          <button class="cancel-btn" onclick="hapusItem(${index})">HAPUS</button>
         `;
         list.appendChild(div);
       });
@@ -312,8 +376,13 @@
 
     function kirimWhatsApp() {
       const pembeliWA = document.getElementById("whatsapp").value.trim();
+      const email = document.getElementById("email").value.trim();
       if (!pembeliWA) {
         alert("⚠️ Harap isi nomor WhatsApp!");
+        return;
+      }
+      if (!email) {
+        alert("⚠️ Harap isi Email!");
         return;
       }
       if (keranjang.length === 0) {
@@ -326,23 +395,29 @@
         pesan += `${i + 1}. ${item.nama} - Rp ${item.harga.toLocaleString('id-ID')}%0A`;
         totalHarga += item.harga;
       });
-      pesan += `%0A💰 Total: Rp ${totalHarga.toLocaleString('id-ID')}%0A📱 WhatsApp: ${pembeliWA}`;
+      pesan += `%0A💰 Total: Rp ${totalHarga.toLocaleString('id-ID')}%0A📱 WhatsApp: ${pembeliWA}%0A📧 Email: ${email}`;
       window.open(`https://wa.me/${adminWA}?text=${pesan}`, "_blank");
     }
 
-    // Cek stok dan ubah tombol otomatis (versi merah)
-    document.querySelectorAll('.product').forEach(p => {
-      const stok = parseInt(p.dataset.stok);
-      const tombol = p.querySelector('button');
-      if (stok <= 0) {
+    function updateTombol(produk, tombol) {
+      if (produk.stok <= 0) {
         tombol.textContent = "Stok Habis";
         tombol.disabled = true;
         tombol.style.background = "#ff4d4d";
         tombol.style.color = "#fff";
         tombol.style.cursor = "not-allowed";
-        tombol.style.boxShadow = "0 0 10px rgba(255,0,0,0.4)";
+        tombol.style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.4)";
       }
+    }
+    // Inisialisasi tombol saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+      const produkElements = document.querySelectorAll('.product');
+      produkElements.forEach((element, index) => {
+        const tombol = element.querySelector('button');
+        updateTombol(daftarProduk[index], tombol);
+      });
     });
   </script>
 </body>
+
 </html>
