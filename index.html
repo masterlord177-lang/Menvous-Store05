@@ -1,647 +1,348 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>MENVOUS STORE - FishIt Store</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Poppins, sans-serif;
-            background: #f5f9ff;
-            color: #0a1f44
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MENVOUS STORE - FishIt Store</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: #f5f9ff;
+      color: #0a1f44;
+    }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(90deg, #00c851, #00e676);
-            /* Warna hijau untuk nav */
-            padding: 1rem 1.5rem;
-            color: #fff;
-            position: sticky;
-            top: 0;
-            z-index: 1000
-        }
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #00c851, #00e676);
+      padding: 1rem 1.5rem;
+      color: white;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem
-        }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
 
-        .menu {
-            cursor: pointer;
-            font-size: 1.5rem
-        }
+    .menu-btn {
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
 
-        .menuContent {
-            display: none;
-            background: #e9fcef;
-            /* Warna hijau untuk menu */
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            justify-content: flex-start
-        }
+    /* Produk Section */
+    .section-title {
+      padding: 1rem 1.5rem 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #009e52;
+    }
 
-        .menuContent button {
-            flex: 1;
-            padding: .5rem;
-            border-radius: 8px;
-            border: none;
-            background: #00c851;
-            /* Warna hijau yang lebih terang untuk tombol */
-            color: #fff;
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            align-items: center
-        }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      padding: 0 1.5rem 2rem;
+    }
 
-        .menuContent button:hover {
-            background: #00e676
-        }
+    .product {
+      background: #ffffff;
+      border-radius: 15px;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 128, 64, 0.15);
+      transition: all 0.25s ease;
+    }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
-            padding: 1rem
-        }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 128, 64, 0.25);
+    }
 
-        .product {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 128, 64, .12)
-        }
+    .product img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      background: #c8f9d2;
+    }
 
-        .product img {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            background: #c8f9d2
-        }
+    .product h3 {
+      font-size: 1rem;
+      margin: 0.6rem 0 0.2rem;
+      color: #007f3d;
+    }
 
-        .product h3 {
-            margin: .6rem 0;
-            color: #007f3d;
-            font-size: 1rem
-        }
+    .product p {
+      font-size: 0.85rem;
+      color: #5a6f8f;
+      margin-bottom: 0.8rem;
+    }
 
-        .product p {
-            color: #5a6f8f;
-            margin: 0 0 .8rem
-        }
+    .product button {
+      background: #00c851;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-        .product button {
-            background: #00c851;
-            border: none;
-            color: #fff;
-            padding: .5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer
-        }
+    .product button:hover {
+      background: #00a13f;
+    }
 
-        .product button:hover {
-            background: #00e676
-        }
+    /* Form */
+    .form-section {
+      background-color: #e9fcef;
+      margin: 1.5rem;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,128,64,0.1);
+    }
 
-        .form-section {
-            background: #e9fcef;
-            margin: 1rem;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0, 128, 64, .08)
-        }
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      color: #009e52;
+    }
 
-        .cart {
-            background: #fff;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            box-shadow: 0 3px 8px rgba(0, 128, 64, .08)
-        }
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1.5px solid #a8f0b5;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
 
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            padding: .35rem 0;
-            border-bottom: 1px solid #eee
-        }
+    input:focus {
+      border-color: #00c851;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 200, 81, 0.3);
+    }
 
-        .cart-total {
-            text-align: right;
-            font-weight: 700;
-            color: #009e52;
-            margin-top: .5rem
-        }
+    .cart {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+      box-shadow: 0 3px 8px rgba(0,128,64,0.1);
+    }
 
-        .btn {
-            padding: .6rem 1rem;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer
-        }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #eee;
+      padding: 0.4rem 0;
+    }
 
-        .btn-primary {
-            background: #00c851;
-            color: #fff
-        }
+    .cart-total {
+      font-weight: 700;
+      margin-top: 0.8rem;
+      text-align: right;
+      color: #009e52;
+    }
 
-        .btn-primary:hover {
-            background: #00e676
-        }
+    .cancel-btn {
+      background: none;
+      border: none;
+      color: #ff4444;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 10px;
+    }
 
-        .btn-success {
-            background: #28a745;
-            color: #fff;
-            margin-right: 5px
-        }
+    .cancel-btn:hover {
+      color: #cc0000;
+      transform: scale(1.1);
+    }
 
-        .btn-danger {
-            background: #dc3545;
-            color: #fff;
-            margin-right: 5px
-        }
+    button.submit {
+      width: 100%;
+      background: #00c851;
+      color: white;
+      font-weight: 600;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 1rem;
+    }
 
-        .modal {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, .45);
-            z-index: 9999
-        }
+    button.submit:hover {
+      background: #00a13f;
+    }
 
-        .modal-card {
-            background: #fff;
-            padding: 1rem;
-            border-radius: 10px;
-            max-width: 420px;
-            width: 95%
-        }
-
-        .payment-methods {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap
-        }
-
-        .payment-methods button {
-            flex: 1;
-            padding: .6rem;
-            border-radius: 8px;
-            border: 2px solid #00c851;
-            background: #fff;
-            color: #007f3d;
-            cursor: pointer
-        }
-
-        .payment-methods button.active {
-            background: #00c851;
-            color: #fff
-        }
-
-        .transaksi-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 3px 8px rgba(0, 128, 64, .1)
-        }
-
-        .admin-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 3px 8px rgba(0, 128, 64, .1)
-        }
-
-        /* Style untuk form ulasan */
-        .ulasan-form {
-            margin-top: 1rem;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #f9f9f9
-        }
-
-        /* Style untuk daftar ulasan */
-        .daftar-ulasan {
-            margin-top: 1rem;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #f9f9f9
-        }
-    </style>
+    footer {
+      background-color: #00c851;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
-
 <body>
-    <nav>
-        <div class="logo">MENVOUS STORE</div>
-        <div class="menu" onclick="toggleMenu()">≡</div>
-    </nav>
-    <div id="menuContent" class="menuContent">
-        <button onclick="scrollToSection('home')">Home</button>
-        <button onclick="scrollToSection('products')">Produk</button>
-        <button onclick="scrollToSection('transaksiList')">Check Invoice</button>
-        <button onclick="scrollToSection('ulasanSection')">Ulasan</button>
-    </div>
-    <div id="products" class="product-grid">
-        <div class="product" data-stok="1">
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">MENVOUS STORE</div>
+    <div class="menu-btn">☰</div>
+  </nav>
+
+  <!-- Produk -->
+  <div class="section-title">🛍️ Pilih Produk FishIt</div>
+  <div class="product-grid">
+    <div class="product" data-stok="0">
       <h3>AKUN ELEMENT</h3>
       <p>Rp 200.000</p>
       <button onclick="tambahKeranjang('AKUN ELEMENT',200000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
+    <div class="product" data-stok="0">
       <h3>AKUN GHOSTFINN</h3>
       <p>Rp 55.000</p>
       <button onclick="tambahKeranjang('AKUN GHOSTFINN',55000)">Tambah</button>
     </div>
-    
     <div class="product" data-stok="1">
       <h3>AKUN GHOSTFINN</h3>
       <p>Rp 50.000</p>
       <button onclick="tambahKeranjang('AKUN GHOSTFINN',50000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
-      <h3>AKUN BAMBO</h3>
+      <div class="product" data-stok="1">
+      <h3>AKUN BAMBOO</h3>
       <p>Rp 45.000</p>
       <button onclick="tambahKeranjang('AKUN BAMBOO',45000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
-      <h3>AKUN ANGLER</h3>
+      <div class="product" data-stok="1">
+          <h3>AKUN ANGLER</h3>
       <p>Rp 40.000</p>
       <button onclick="tambahKeranjang('AKUN ANGLER',40000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
+      <div class="product" data-stok="1">
       <h3>AKUN ARES</h3>
       <p>Rp 35.000</p>
       <button onclick="tambahKeranjang('AKUN ARES',35000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
-      <h3>AKUN ASTRAL</h3>
-      <p>Rp 30.000</p>
-      <button onclick="tambahKeranjang('AKUN ASTRAL',30000)">Tambah</button>
-    </div>
-
-    <div class="product" data-stok="1">
+      <div class="product" data-stok="1">
       <h3>AKUN HAZMAT</h3>
       <p>Rp 30.000</p>
       <button onclick="tambahKeranjang('AKUN HAZMAT',30000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
-      <h3>COIN FISH IT</h3>
+      <div class="product" data-stok="1">
+      <h3>AKUN ASTRAL</h3>
+      <p>Rp 30.000</p>
+      <button onclick="tambahKeranjang('AKUN ASTRAL',30000)">Tambah</button>
+    </div>
+      <div class="product" data-stok="1">
+      <h3>AKUN COIN FISH IT</h3>
       <p>Rp 20.000</p>
       <button onclick="tambahKeranjang('COIN FISH IT',20000)">Tambah</button>
     </div>
-
-    <div class="product" data-stok="1">
+      <div class="product" data-stok="1">
       <h3>SECRET TUMBAL</h3>
       <p>Rp 7.000</p>
       <button onclick="tambahKeranjang('SECRET TUMBAL',7000)">Tambah</button>
     </div>
-      
+  </div>
+
+  <!-- Form -->
+  <div class="form-section">
+    <h2>💾 Data Pembeli</h2>
+    <label>Nomor WhatsApp Kamu</label>
+    <input type="tel" id="whatsapp" placeholder="08xxxxxxxxxx">
+
+    <div class="cart" id="cart">
+      <h3>🛒 Keranjang Belanja</h3>
+      <div id="cartItems"></div>
+      <div class="cart-total" id="cartTotal">Total: Rp 0</div>
     </div>
-    <div class="form-section">
-        <h2>💾 Data Pembeli</h2>
-        <input type="email" id="email" placeholder="Email"
-            style="width:100%;padding:.6rem;border-radius:8px;border:1.5px solid #a8f0b5;margin-bottom:.5rem">
-        <input type="tel" id="whatsapp" placeholder="08xxxxxxxxxx"
-            style="width:100%;padding:.6rem;border-radius:8px;border:1.5px solid #a8f0b5;margin-bottom:.5rem">
-        <div class="payment-methods">
-            <button id="btnQRIS" onclick="pilihMetode('QRIS')">QRIS</button>
-            <button id="btnDana" onclick="pilihMetode('Dana')">Dana</button>
-            <button id="btnGoPay" onclick="pilihMetode('GoPay')">GoPay</button>
-        </div>
-        <div class="cart" id="cart">
-            <h3>🛒 Keranjang Belanja</h3>
-            <div id="cartItems"></div>
-            <div class="cart-total" id="cartTotal">Total: Rp 0</div>
-        </div>
-        <button class="btn btn-primary" onclick="bayarSekarang()">Bayar Sekarang</button>
-    </div>
-    <h2 id="transaksiList" style="margin-left:1rem">📄 Check Invoice</h2>
-    <div id="transaksiList" style="margin:1rem"></div>
-    <!-- Fitur Ulasan Dipindahkan Ke Sini -->
-    <div id="ulasanSection" style="margin:1rem">
-        <h2>⭐ Ulasan Produk</h2>
-        <div class="ulasan-form">
-            <h3>Berikan Ulasan</h3>
-            <form id="formUlasanUmum">
-                <input type="text" id="namaPenggunaUmum" placeholder="Nama (opsional)">
-                <select id="ratingUmum">
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="1">⭐</option>
-                </select>
-                <select id="produkUlasan">
-                    <option value="AKUN ELEMENT">AKUN ELEMENT</option>
-                    <option value="AKUN GHOSTFINN">AKUN GHOSTFINN</option>
-                </select>
-                <textarea id="komentarUmum" placeholder="Tulis ulasan Anda di sini"></textarea>
-                <button type="button" onclick="kirimUlasan()">Kirim Ulasan</button>
-            </form>
-        </div>
-        <div class="daftar-ulasan" id="daftarUlasan">
-            <h3>Ulasan Pengguna</h3>
-            <!-- Ulasan akan ditampilkan di sini -->
-        </div>
-    </div>
-    <h2 style="margin-left:1rem">🛠 Admin Panel</h2>
-    <div id="adminTransaksi" style="margin:1rem"></div>
-    <div id="modal" class="modal" style="display:none">
-        <div class="modal-card">
-            <div id="modalContent"></div>
-            <div style="text-align:right;margin-top:.6rem">
-                <button class="btn btn-secondary" onclick="tutupModal()">Tutup</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        let keranjang = [],
-            totalHarga = 0,
-            metodeBayar = null;
-        let transaksi = JSON.parse(localStorage.getItem('transaksi')) || [];
 
-        function pilihMetode(met) {
-            metodeBayar = met;
-            document.querySelectorAll('.payment-methods button').forEach(b => b.classList.remove('active'));
-            document.getElementById('btn' + met).classList.add('active');
-        }
+    <button class="submit" onclick="kirimWhatsApp()">Kirim ke WhatsApp</button>
+  </div>
 
-        function tambahKeranjang(n, h) {
-            keranjang.push({
-                nama: n,
-                harga: h
-            });
-            updateKeranjang();
-        }
+  <footer>© 2025 MENVOUS STORE | All Rights Reserved</footer>
 
-        function updateKeranjang() {
-            const list = document.getElementById('cartItems');
-            const total = document.getElementById('cartTotal');
-            list.innerHTML = "";
-            totalHarga = 0;
-            keranjang.forEach((item, index) => {
-                totalHarga += item.harga;
-                const div = document.createElement('div');
-                div.classList.add('cart-item');
-                div.innerHTML =
-                    `<span>${item.nama}</span><span>Rp ${item.harga.toLocaleString('id-ID')}</span>
-    <button class="cancel-btn" onclick="hapusItem(${index})">HAPUS</button>`;
-                list.appendChild(div);
-            });
-            total.textContent = `Total: Rp ${totalHarga.toLocaleString('id-ID')}`
-        }
+  <script>
+    const keranjang = [];
+    const adminWA = "6282364492977";
 
-        function hapusItem(index) {
-            keranjang.splice(index, 1);
-            updateKeranjang();
-        }
+    function tambahKeranjang(nama, harga) {
+      keranjang.push({ nama, harga });
+      updateKeranjang();
+    }
 
-        function bayarSekarang() {
-            const wa = document.getElementById('whatsapp').value.trim();
-            const email = document.getElementById('email').value.trim();
-            if (!metodeBayar) return alert("Pilih metode pembayaran!");
-            if (!/^08[0-9]{8,13}$/.test(wa)) return alert("Nomor WhatsApp tidak valid!");
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert("Keranjang kosong!");
-            const kode = 'INV-' + Math.floor(100000 + Math.random() * 900000);
-            const items = keranjang.map(i => i.nama).join(', ');
-            const total = totalHarga;
-            const waktu = new Date();
-            const status = 'Pending'; // langsung Pending
-            const transaksiObj = {
-                id: kode,
-                wa,
-                email,
-                items,
-                total,
-                status,
-                metode: metodeBayar,
-                tanggal: waktu.toLocaleString('id-ID'),
-                timestamp: waktu.getTime()
-            };
-            transaksi.unshift(transaksiObj);
-            if (transaksi.length > 10) transaksi = transaksi.slice(0, 10);
-            try {
-                localStorage.setItem('transaksi', JSON.stringify(transaksi));
-            } catch (e) {
-                console.error("Gagal menyimpan transaksi ke localStorage:", e);
-                alert("Gagal menyimpan transaksi. Silakan coba lagi.");
-                return;
-            }
-            const imgQR = metodeBayar === 'QRIS' ? 'qr.png' : (metodeBayar === 'Dana' ? 'dana.png' :
-                'gopay.png');
-            document.getElementById('modalContent').innerHTML =
-                `<h3>Pembayaran via ${metodeBayar}</h3>
-    <p>Total: <b>Rp ${totalHarga.toLocaleString('id-ID')}</b></p>
-    <img src="${imgQR}" style="max-width:250px;border-radius:8px">
-    <p>Status: <b>${status}</b></p>
-    <div style="margin-top:10px;">
-      <button class="btn btn-primary" onclick="prosesPembayaran('${kode}')">Bayar Sekarang</button>
-    </div>`; // Menghilangkan alert
-            document.getElementById('modal').style.display = 'flex';
-            keranjang = [];
-            updateKeranjang();
-            renderTransaksi();
-            renderAdminTransaksi();
-        }
+    function updateKeranjang() {
+      const list = document.getElementById("cartItems");
+      const total = document.getElementById("cartTotal");
+      list.innerHTML = "";
+      let totalHarga = 0;
 
-        function prosesPembayaran(kode) {
-            // Tambahkan logika pembayaran di sini
-            // Misalnya, mengirim data ke server, menampilkan pesan sukses, dll.
-            alert(`Simulasi pembayaran berhasil untuk kode transaksi: ${kode}!`); // Ganti dengan logika sebenarnya
-            tutupModal(); // Tutup modal setelah pembayaran
-        }
+      keranjang.forEach((item, index) => {
+        totalHarga += item.harga;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <span>${item.nama}</span>
+          <span>Rp ${item.harga.toLocaleString('id-ID')}</span>
+          <button class="cancel-btn" onclick="hapusItem(${index})">❌</button>
+        `;
+        list.appendChild(div);
+      });
+      total.textContent = `Total: Rp ${totalHarga.toLocaleString('id-ID')}`;
+    }
 
-        function renderTransaksi() {
-            let listHTML = '';
-            const now = Date.now();
-            transaksi.forEach((t, index) => {
-                let displayStatus = t.status;
-                if (t.status === 'Pending') {
-                    if (now - t.timestamp > 10 * 60 * 1000) { // lebih dari 10 menit
-                        t.status = 'Gagal';
-                        try {
-                            localStorage.setItem('transaksi', JSON.stringify(transaksi));
-                        } catch (e) {
-                            console.error("Gagal menyimpan transaksi ke localStorage:", e);
-                        }
-                    } else {
-                        displayStatus = 'Pending';
-                    }
-                }
-                const color = t.status === 'Selesai' ? 'green' : t.status === 'Gagal' ? 'red' : 'orange';
-                listHTML +=
-                    `<div class="transaksi-card"><b>${t.id}</b> | ${t.items} | Rp ${t.total.toLocaleString('id-ID')} |
-       <span style="color:${color}">${displayStatus}</span> | ${t.tanggal} | ${maskEmail(t.email)}</div>`;
-            });
-            document.getElementById('transaksiList').innerHTML = listHTML;
-        }
+    function hapusItem(index) {
+      keranjang.splice(index, 1);
+      updateKeranjang();
+    }
 
-        function renderAdminTransaksi() {
-            let html = '';
-            transaksi.forEach((t, index) => {
-                const color = t.status === 'Selesai' ? 'green' : t.status === 'Gagal' ? 'red' : 'orange';
-                html +=
-                    `<div class="admin-card"><b>${t.id}</b> | ${t.items} | Rp ${t.total.toLocaleString('id-ID')} |
-       <span style="color:${color}">${t.status}</span> | ${t.tanggal} | ${maskEmail(t.email)}
-      <div style="margin-top:5px;">
-        <button class="btn btn-success" onclick="ubahStatus(${index},'Selesai')">Selesai</button>
-        <button class="btn btn-danger" onclick="ubahStatus(${index},'Gagal')">Gagal</button>
-      </div>
-    </div>`;
-            });
-            document.getElementById('adminTransaksi').innerHTML = html;
-        }
+    function kirimWhatsApp() {
+      const pembeliWA = document.getElementById("whatsapp").value.trim();
+      if (!pembeliWA) {
+        alert("⚠️ Harap isi nomor WhatsApp!");
+        return;
+      }
+      if (keranjang.length === 0) {
+        alert("🛒 Keranjang masih kosong!");
+        return;
+      }
+      let pesan = `Halo Admin!%0A%0A` + `Saya ingin memesan produk:%0A`;
+      let totalHarga = 0;
+      keranjang.forEach((item, i) => {
+        pesan += `${i + 1}. ${item.nama} - Rp ${item.harga.toLocaleString('id-ID')}%0A`;
+        totalHarga += item.harga;
+      });
+      pesan += `%0A💰 Total: Rp ${totalHarga.toLocaleString('id-ID')}%0A📱 WhatsApp: ${pembeliWA}`;
+      window.open(`https://wa.me/${adminWA}?text=${pesan}`, "_blank");
+    }
 
-        function ubahStatus(index, status) {
-            try {
-                transaksi[index].status = status;
-                localStorage.setItem('transaksi', JSON.stringify(transaksi));
-                renderAdminTransaksi();
-                renderTransaksi();
-
-                const t = transaksi[index];
-                // Encode the message for use in a URI
-                const message = encodeURIComponent(
-                    `Halo!\nStatus transaksi Anda dengan ID ${t.id} adalah: ${status}\nTotal: Rp ${t.total.toLocaleString('id-ID')}`
-                );
-                // Construct the WhatsApp URL
-                const waLink = `https://wa.me/${t.wa}?text=${message}`;
-
-                // Try opening the link, but catch any errors
-                try {
-                    window.open(waLink, '_blank');
-                } catch (e) {
-                    console.error("Gagal membuka tautan WhatsApp:", e);
-                    alert("Gagal membuka tautan WhatsApp. Pastikan nomor WhatsApp valid.");
-                }
-
-            } catch (e) {
-                console.error("Terjadi kesalahan saat mengubah status:", e);
-                alert("Terjadi kesalahan saat mengubah status. Silakan coba lagi.");
-            }
-        }
-
-        function maskEmail(email) {
-            if (!email) return ""; // Handle null or undefined email
-            const [user, domain] = email.split('@');
-            if (user.length <= 2) return '**@' + domain;
-            return user[0] + '**' + user[user.length - 1] + '@' + domain;
-        }
-
-        function toggleMenu() {
-            const m = document.getElementById('menuContent');
-            m.style.display = m.style.display === 'none' ? 'flex' : 'none';
-        }
-
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        function tutupModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-
-        // Fungsi untuk mengirim ulasan
-        function kirimUlasan() {
-            const namaPengguna = document.getElementById('namaPenggunaUmum').value || 'Anonim'; // Jika nama kosong
-            const rating = document.getElementById('ratingUmum').value;
-            const komentar = document.getElementById('komentarUmum').value;
-            const produkUlasan = document.getElementById('produkUlasan').value;
-            const tanggalUlasan = new Date().toLocaleString('id-ID');
-
-            const ulasanBaru = {
-                id_produk: produkUlasan,
-                nama_pengguna: namaPengguna,
-                rating: parseInt(rating), // Pastikan rating adalah integer
-                komentar: komentar,
-                tanggal_ulasan: tanggalUlasan
-            };
-
-            // Dapatkan ulasan yang sudah ada dari localStorage
-            let ulasan = JSON.parse(localStorage.getItem('ulasan')) || [];
-
-            // Tambahkan ulasan baru ke array
-            ulasan.push(ulasanBaru);
-
-            // Simpan kembali ke localStorage
-            try {
-                localStorage.setItem('ulasan', JSON.stringify(ulasan));
-            } catch (e) {
-                console.error("Gagal menyimpan ulasan ke localStorage:", e);
-                alert("Gagal menyimpan ulasan. LocalStorage mungkin penuh.");
-                return;
-            }
-
-            // Tampilkan ulasan baru dan ulasan yang sudah ada
-            tampilkanUlasan();
-
-            // Reset form
-            document.getElementById('formUlasanUmum').reset();
-        }
-
-        // Fungsi untuk menampilkan ulasan
-        function tampilkanUlasan() {
-            const daftarUlasan = document.getElementById('daftarUlasan');
-            daftarUlasan.innerHTML = ''; // Kosongkan daftar ulasan
-
-            // Dapatkan ulasan dari localStorage
-            let ulasan = JSON.parse(localStorage.getItem('ulasan')) || [];
-
-            // Tampilkan setiap ulasan
-            ulasan.forEach(ulasan => {
-                const divUlasan = document.createElement('div');
-                divUlasan.classList.add('ulasan'); // Tambahkan class ulasan
-                divUlasan.innerHTML = `
-                <p><span class="ulasan-nama">${ulasan.nama_pengguna}</span> - <span class="ulasan-tanggal">${ulasan.tanggal_ulasan}</span></p>
-                <p>Produk: ${ulasan.id_produk}</p>
-                <p>Rating: ${tampilkanBintang(ulasan.rating)}</p>
-                <p>${ulasan.komentar}</p>
-              `;
-                daftarUlasan.appendChild(divUlasan);
-            });
-        }
-
-        // Fungsi untuk menampilkan bintang berdasarkan rating
-        function tampilkanBintang(rating) {
-            let bintang = '';
-            for (let i = 0; i < rating; i++) {
-                bintang += '⭐';
-            }
-            return bintang;
-        }
-
-        // Inisialisasi ulasan saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', function () {
-            tampilkanUlasan();
-        });
-        updateKeranjang();
-        renderTransaksi();
-        renderAdminTransaksi();
-        setInterval(renderTransaksi, 60000); // cek setiap menit untuk auto gagal
-    </script>
+    // Cek stok dan ubah tombol otomatis (versi merah)
+    document.querySelectorAll('.product').forEach(p => {
+      const stok = parseInt(p.dataset.stok);
+      const tombol = p.querySelector('button');
+      if (stok <= 0) {
+        tombol.textContent = "Stok Habis";
+        tombol.disabled = true;
+        tombol.style.background = "#ff4d4d";
+        tombol.style.color = "#fff";
+        tombol.style.cursor = "not-allowed";
+        tombol.style.boxShadow = "0 0 10px rgba(255,0,0,0.4)";
+      }
+    });
+  </script>
 </body>
-
 </html>
