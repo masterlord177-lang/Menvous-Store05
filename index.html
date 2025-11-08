@@ -396,21 +396,47 @@
       return tombolProduk;
     }
 
+    function isValidWhatsApp(number) {
+      // Hilangkan karakter selain angka
+      const cleanedNumber = number.replace(/\D/g, '');
+
+      // Periksa panjang nomor
+      if (cleanedNumber.length < 10 || cleanedNumber.length > 13) {
+        return false;
+      }
+
+      // Periksa apakah semua karakter adalah angka
+      if (!/^\d+$/.test(cleanedNumber)) {
+        return false;
+      }
+
+      return true;
+    }
+
     function kirimWhatsApp() {
       const pembeliWA = document.getElementById("whatsapp").value.trim();
       const email = document.getElementById("email").value.trim();
+
       if (!pembeliWA) {
         alert("⚠️ Harap isi nomor WhatsApp!");
         return;
       }
+
+      if (!isValidWhatsApp(pembeliWA)) {
+        alert("⚠️ Nomor WhatsApp tidak valid. Harap masukkan nomor yang benar.");
+        return;
+      }
+
       if (!email) {
         alert("⚠️ Harap isi Email!");
         return;
       }
+
       if (keranjang.length === 0) {
         alert("🛒 Keranjang masih kosong!");
         return;
       }
+
       let pesan = `Halo Admin!%0A%0A` + `Saya ingin memesan produk:%0A`;
       let totalHarga = 0;
       keranjang.forEach((item, i) => {
