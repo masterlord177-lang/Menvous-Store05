@@ -1,353 +1,228 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MENVOUS STORE - FishIt Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkblue: '#0a1a2f',
+            lightgreen: '#00ff99',
+            greenhover: '#00e68a',
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background-color: #f5f9ff;
-      color: #0a1f44;
+    section {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-
-    /* Navbar */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #00c851, #00e676);
-      padding: 1rem 1.5rem;
-      color: white;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-
-    .menu-btn {
-      font-size: 1.6rem;
-      cursor: pointer;
-    }
-
-    /* Produk Section */
-    .section-title {
-      padding: 1rem 1.5rem 0.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #009e52;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      padding: 0 1.5rem 2rem;
-    }
-
-    .product {
-      background: #ffffff;
-      border-radius: 15px;
-      overflow: hidden;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 128, 64, 0.15);
-      transition: all 0.25s ease;
-    }
-
-    .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 128, 64, 0.25);
-    }
-
-    .product img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      background: #c8f9d2;
-    }
-
-    .product h3 {
-      font-size: 1rem;
-      margin: 0.6rem 0 0.2rem;
-      color: #007f3d;
-    }
-
-    .product p {
-      font-size: 0.85rem;
-      color: #5a6f8f;
-      margin-bottom: 0.8rem;
-    }
-
-    .product button {
-      background: #00c851;
-      border: none;
-      color: white;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .product button:hover {
-      background: #00a13f;
-    }
-
-    /* Form */
-    .form-section {
-      background-color: #e9fcef;
-      margin: 1.5rem;
-      border-radius: 15px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 10px rgba(0, 128, 64, 0.1);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: 600;
-      color: #009e52;
-    }
-
-    input {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1.5px solid #a8f0b5;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-
-    input:focus {
-      border-color: #00c851;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 200, 81, 0.3);
-    }
-
-    .cart {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-top: 1rem;
-      box-shadow: 0 3px 8px rgba(0, 128, 64, 0.1);
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #eee;
-      padding: 0.4rem 0;
-    }
-
-    .cart-total {
-      font-weight: 700;
-      margin-top: 0.8rem;
-      text-align: right;
-      color: #009e52;
-    }
-
-    .cancel-btn {
-      background: none;
-      border: none;
-      color: #ff4444;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    .cancel-btn:hover {
-      color: #cc0000;
-      transform: scale(1.1);
-    }
-
-    button.submit {
-      width: 100%;
-      background: #00c851;
-      color: white;
-      font-weight: 600;
-      border: none;
-      padding: 0.7rem;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 1rem;
-    }
-
-    button.submit:hover {
-      background: #00a13f;
-    }
-
-    footer {
-      background-color: #00c851;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      margin-top: 2rem;
+    section:not(.hidden) {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
+<body class="bg-darkblue text-white font-sans">
 
-<body>
   <!-- Navbar -->
-  <nav>
-    <div class="logo">MENVOUS STORE</div>
-    <div class="menu-btn">☰</div>
-  </nav>
-  <!-- Produk -->
-  <div class="section-title" style="margin-bottom: 0.3rem;">🔥POPULER SEKARANG!</div>
-  <p style="font-size: 0.8rem; color: #5a6f8f; padding: 0 1.5rem; margin-top: 0.1rem;">Berikut adalah beberapa produk yang paling populer saat ini</p>
-  <div class="product-grid">
-    <div class="product">
-      <h3>AKUN ELEMENT</h3>
-      <p>Rp 200.000</p>
-      <button onclick="tambahKeranjang('AKUN ELEMENT',200000, this)">Tambah</button>
+  <header class="flex items-center justify-between p-4 border-b border-gray-700 bg-[#0d213a]">
+    <div class="flex items-center gap-2">
+      <div class="bg-lightgreen text-darkblue font-bold rounded-lg px-2 py-1 text-lg">M</div>
+      <span class="text-xl font-bold">MENVOUS STORE</span>
     </div>
-    <div class="product">
-      <h3>AKUN GHOSTFINN</h3>
-      <p>Rp 55.000</p>
-      <button onclick="tambahKeranjang('AKUN GHOSTFINN',55000, this)">Tambah</button>
+    <button id="menuBtn" class="text-2xl md:hidden hover:text-lightgreen transition">☰</button>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#0d213a] shadow-2xl transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
+    <div class="p-5">
+      <div class="flex items-center gap-2 mb-6">
+        <div class="bg-lightgreen text-darkblue font-bold rounded-lg px-2 py-1 text-lg">M</div>
+        <h1 class="text-xl font-bold">MENVOUS STORE</h1>
+      </div>
+
+      <input type="text" placeholder="Cari..." class="w-full p-2 mb-4 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-lightgreen" />
+
+      <nav class="space-y-2">
+        <button onclick="tampilkanToko()" class="flex items-center gap-3 p-2 rounded-lg w-full text-left hover:bg-greenhover/20 transition">
+          <span class="text-lightgreen text-xl">🏠</span> Toko
+        </button>
+        <button onclick="tampilkanInvoice()" class="flex items-center gap-3 p-2 rounded-lg w-full text-left hover:bg-greenhover/20 transition">
+          <span class="text-lightgreen text-xl">🔍</span> Cek Invoice
+        </button>
+        <button onclick="tampilkanUlasan()" class="flex items-center gap-3 p-2 rounded-lg w-full text-left hover:bg-greenhover/20 transition">
+          <span class="text-lightgreen text-xl">⭐</span> Ulasan
+        </button>
+      </nav>
     </div>
-    <div class="product">
-      <h3>AKUN GHOSTFINN</h3>
-      <p>Rp 50.000</p>
-      <button onclick="tambahKeranjang('AKUN GHOSTFINN',50000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>AKUN BAMBOO</h3>
-      <p>Rp 45.000</p>
-      <button onclick="tambahKeranjang('AKUN BAMBOO',45000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>AKUN ANGLER</h3>
-      <p>Rp 40.000</p>
-      <button onclick="tambahKeranjang('AKUN ANGLER',40000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>AKUN ARES</h3>
-      <p>Rp 35.000</p>
-      <button onclick="tambahKeranjang('AKUN ARES',35000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>AKUN HAZMAT</h3>
-      <p>Rp 30.000</p>
-      <button onclick="tambahKeranjang('AKUN HAZMAT',30000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>AKUN ASTRAL</h3>
-      <p>Rp 30.000</p>
-      <button onclick="tambahKeranjang('AKUN ASTRAL',30000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>AKUN COIN FISH IT</h3>
-      <p>Rp 20.000</p>
-      <button onclick="tambahKeranjang('AKUN COIN FISH IT',20000, this)">Tambah</button>
-    </div>
-    <div class="product">
-      <h3>SECRET TUMBAL</h3>
-      <p>Rp 7.000</p>
-      <button onclick="tambahKeranjang('SECRET TUMBAL',7000, this)">Tambah</button>
-    </div>
-  </div>
-  <!-- Form -->
-  <div class="form-section">
-    <h2>✉️ Detail Kontak</h2>
-    <label>Email</label>
-    <input type="email" id="email" placeholder="Contoh@gmail.com">
-    <label>Nomor WhatsApp Kamu</label>
-    <input type="tel" id="whatsapp" placeholder="08xxxxxxxxxx">
-    <div class="cart" id="cart">
-      <h3>🛒 Keranjang Belanja</h3>
-      <div id="cartItems"></div>
-      <div class="cart-total" id="cartTotal">Total: Rp 0</div>
-    </div>
-    <button class="submit" onclick="kirimWhatsApp()">PESAN SEKARANG</button>
-  </div>
-  <footer>© 2025 MENVOUS STORE | All Rights Reserved</footer>
+  </aside>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/60 hidden z-40"></div>
+
+  <!-- Main Content -->
+  <main class="md:ml-64 p-6">
+
+    <!-- TOKO SECTION -->
+    <section id="toko-section">
+      <h2 class="text-2xl font-bold mb-1 text-lightgreen">🔥POPULER SEKARANG!</h2>
+      <p class="text-gray-500 text-xs italic mb-4">Produk pilihan terbaik kami saat ini.</p>
+
+      <div id="produkGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+      <!-- Form Pembeli -->
+      <div class="bg-[#0d213a] p-5 rounded-xl mt-6">
+        <h2 class="text-xl font-bold text-lightgreen mb-3">✉️ Detail Kontak</h2>
+        <label>Email</label>
+        <input type="email" id="email" placeholder="contoh@gmail.com" class="w-full p-2 mb-3 rounded-lg text-black">
+        <label>Nomor WhatsApp Kamu</label>
+        <input type="tel" id="whatsapp" placeholder="08xxxxxxxxxx" class="w-full p-2 mb-2 rounded-lg text-black">
+        <p id="waError" class="text-red-400 text-xs mb-2 hidden">Nomor WA tidak valid. Gunakan format 08xxxxxxxx atau +628xxxxxxxx.</p>
+        <div class="bg-[#13294b] p-4 rounded-lg mb-3">
+          <h3 class="text-lg font-semibold mb-2 text-lightgreen">🛒 Keranjang Belanja</h3>
+          <div id="cartItems"></div>
+          <div id="cartTotal" class="font-bold mt-2 text-right">Total: Rp 0</div>
+        </div>
+        <button id="orderBtn" onclick="kirimWhatsApp()" class="w-full bg-lightgreen hover:bg-greenhover text-darkblue font-bold py-2 rounded-lg transition">PESAN SEKARANG</button>
+      </div>
+    </section>
+
+    <!-- INVOICE SECTION -->
+    <section id="invoice-section" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-lightgreen">Cek Status Invoice</h2>
+      <input type="text" id="invoice-id" placeholder="Masukkan ID Invoice..." class="w-full p-2 mb-3 rounded-lg text-black">
+      <button onclick="cekInvoice()" class="bg-lightgreen hover:bg-greenhover text-darkblue font-bold px-4 py-2 rounded-lg">Cek Invoice</button>
+      <div id="status-invoice" class="mt-4 bg-[#13294b] p-3 rounded-lg">Status invoice akan muncul di sini.</div>
+    </section>
+
+    <!-- ULASAN SECTION -->
+    <section id="review-section" class="hidden">
+      <h2 class="text-2xl font-bold mb-4 text-lightgreen">Ulasan Pelanggan</h2>
+      <div id="review-list" class="space-y-4 mb-6">
+        <div class="bg-[#13294b] p-4 rounded-lg">
+          <h3 class="font-bold">BOKIRE</h3>
+          <div class="text-yellow-400">★★★★★</div>
+          <p class="text-gray-300">Produknya bagus dan pelayanannya cepat!</p>
+        </div>
+      </div>
+
+      <div class="bg-[#0d213a] p-5 rounded-xl">
+        <h3 class="text-xl font-bold text-lightgreen mb-3">Berikan Ulasan Anda</h3>
+        <input type="text" id="nama" placeholder="Nama Anda" class="w-full p-2 mb-3 rounded-lg text-black">
+        <label>Rating:</label>
+        <div class="flex flex-row-reverse text-2xl mb-3">
+          <input type="radio" id="star5" name="rating" value="5" class="hidden" />
+          <label for="star5" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
+          <input type="radio" id="star4" name="rating" value="4" class="hidden" />
+          <label for="star4" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
+          <input type="radio" id="star3" name="rating" value="3" class="hidden" />
+          <label for="star3" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
+          <input type="radio" id="star2" name="rating" value="2" class="hidden" />
+          <label for="star2" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
+          <input type="radio" id="star1" name="rating" value="1" class="hidden" />
+          <label for="star1" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
+        </div>
+        <textarea id="ulasan" rows="4" placeholder="Tulis ulasan Anda..." class="w-full p-2 mb-3 rounded-lg text-black"></textarea>
+        <button onclick="tambahUlasan()" class="bg-lightgreen hover:bg-greenhover text-darkblue font-bold px-4 py-2 rounded-lg">Kirim Ulasan</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center p-4 border-t border-gray-700 mt-6 text-gray-400">
+    © 2025 MENVOUS STORE | All Rights Reserved
+  </footer>
+
   <script>
+    // ===== Sidebar Control =====
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    const overlay = document.getElementById('overlay');
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    });
+    overlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    });
+
+    // ===== Data Produk =====
+    const daftarProduk = [
+      { nama: 'AKUN ELEMENT', harga: 200000, stok: 1 },
+      { nama: 'AKUN GHOSTFINN', harga: 55000, stok: 1 },
+      { nama: 'AKUN GHOSTFINN', harga: 50000, stok: 1 },
+      { nama: 'AKUN BAMBOO', harga: 45000, stok: 1 },
+      { nama: 'AKUN ANGLER', harga: 40000, stok: 1 },
+      { nama: 'AKUN ARES', harga: 35000, stok: 1 },
+      { nama: 'AKUN HAZMAT', harga: 30000, stok: 1 },
+      { nama: 'AKUN ASTRAL', harga: 30000, stok: 1 },
+      { nama: 'AKUN COIN FISH IT', harga: 20000, stok: 1 },
+      { nama: 'SECRET TUMBAL', harga: 7000, stok: 1 }
+    ];
     const keranjang = [];
     const adminWA = "6282364492977";
-    // Data produk dengan stok
-    const daftarProduk = [{
-        nama: 'AKUN ELEMENT',
-        harga: 200000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN GHOSTFINN',
-        harga: 55000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN GHOSTFINN',
-        harga: 50000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN BAMBOO',
-        harga: 45000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN ANGLER',
-        harga: 40000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN ARES',
-        harga: 35000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN HAZMAT',
-        harga: 30000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN ASTRAL',
-        harga: 30000,
-        stok: 1
-      },
-      {
-        nama: 'AKUN COIN FISH IT',
-        harga: 20000,
-        stok: 1
-      },
-      {
-        nama: 'SECRET TUMBAL',
-        harga: 7000,
-        stok: 1
-      }
-    ];
 
+    const produkGrid = document.getElementById("produkGrid");
+    daftarProduk.forEach((p) => {
+      const div = document.createElement("div");
+      div.className = "bg-[#0d213a] rounded-xl p-3 shadow hover:shadow-lg transition";
+      div.innerHTML = `
+        <img src="https://dummyimage.com/200x120/c8f9d2/007f3d" class="w-full rounded-lg mb-2">
+        <h3 class="text-lightgreen font-bold">${p.nama}</h3>
+        <p class="text-gray-300 mb-2">Rp ${p.harga.toLocaleString('id-ID')}</p>
+        <button onclick="tambahKeranjang('${p.nama}', ${p.harga}, this)" class="bg-lightgreen text-darkblue font-bold px-3 py-1 rounded-lg hover:bg-greenhover transition">Tambah</button>
+      `;
+      produkGrid.appendChild(div);
+    });
+
+    // ===== Navigasi Section =====
+    function tampilkanToko() {
+      setActive(0);
+      document.getElementById("toko-section").classList.remove("hidden");
+      document.getElementById("invoice-section").classList.add("hidden");
+      document.getElementById("review-section").classList.add("hidden");
+    }
+    function tampilkanInvoice() {
+      setActive(1);
+      document.getElementById("toko-section").classList.add("hidden");
+      document.getElementById("invoice-section").classList.remove("hidden");
+      document.getElementById("review-section").classList.add("hidden");
+    }
+    function tampilkanUlasan() {
+      setActive(2);
+      document.getElementById("toko-section").classList.add("hidden");
+      document.getElementById("invoice-section").classList.add("hidden");
+      document.getElementById("review-section").classList.remove("hidden");
+    }
+    function setActive(index) {
+      document.querySelectorAll("aside nav button").forEach((btn, i) => {
+        btn.classList.remove("bg-greenhover/20");
+        if (i === index) btn.classList.add("bg-greenhover/20");
+      });
+    }
+
+    // ===== Keranjang =====
     function tambahKeranjang(nama, harga, tombol) {
-      // Cari produk yang sesuai dalam daftarProduk
       const produk = daftarProduk.find(p => p.nama === nama && p.harga === harga);
-      if (!produk) {
-        console.error("Produk tidak ditemukan:", nama, harga);
-        return;
-      }
-      // Periksa apakah stok masih tersedia
-      if (produk.stok > 0) {
-        keranjang.push({
-          nama,
-          harga
-        });
-        produk.stok--; // Kurangi stok
-        updateKeranjang();
-        updateTombol(produk, tombol); // Perbarui tampilan tombol
-      } else {
-        alert("Stok habis!");
+      if (!produk || produk.stok <= 0) return alert("Stok habis!");
+      const item = keranjang.find(i => i.nama === nama);
+      if (item) return alert("Produk ini sudah ada di keranjang!");
+
+      keranjang.push({ nama, harga });
+      produk.stok--;
+      updateKeranjang();
+      if (produk.stok <= 0) {
+        tombol.textContent = "Stok Habis";
+        tombol.disabled = true;
+        tombol.classList.replace("bg-lightgreen", "bg-red-500");
       }
     }
 
@@ -359,11 +234,11 @@
       keranjang.forEach((item, index) => {
         totalHarga += item.harga;
         const div = document.createElement("div");
-        div.classList.add("cart-item");
+        div.className = "flex justify-between mb-1";
         div.innerHTML = `
           <span>${item.nama}</span>
           <span>Rp ${item.harga.toLocaleString('id-ID')}</span>
-          <button class="cancel-btn" onclick="hapusItem(${index})">HAPUS</button>
+          <button onclick="hapusItem(${index})" class="text-red-400 hover:text-red-600">❌</button>
         `;
         list.appendChild(div);
       });
@@ -371,108 +246,93 @@
     }
 
     function hapusItem(index) {
-      // Dapatkan item yang akan dihapus
-      const itemDihapus = keranjang[index];
-      // Cari produk yang sesuai dalam daftarProduk
-      const produk = daftarProduk.find(p => p.nama === itemDihapus.nama && p.harga === itemDihapus.harga);
-      if (produk) {
-        produk.stok++; // Kembalikan stok
-        updateTombol(produk, getTombolProduk(itemDihapus.nama, itemDihapus.harga)); // Perbarui tampilan tombol
-      }
+      const item = keranjang[index];
+      const produk = daftarProduk.find(p => p.nama === item.nama && p.harga === item.harga);
+      if (produk) produk.stok++;
+      document.querySelectorAll("#produkGrid button").forEach(btn => {
+        const namaProduk = btn.parentElement.querySelector("h3").textContent;
+        if (namaProduk === produk.nama) {
+          btn.textContent = "Tambah";
+          btn.disabled = false;
+          btn.classList.replace("bg-red-500", "bg-lightgreen");
+        }
+      });
       keranjang.splice(index, 1);
       updateKeranjang();
     }
 
-    function getTombolProduk(nama, harga) {
-      const produkElements = document.querySelectorAll('.product');
-      let tombolProduk = null;
-      produkElements.forEach(element => {
-        const h3 = element.querySelector('h3');
-        const p = element.querySelector('p');
-        if (h3.textContent === nama && p.textContent === `Rp ${harga.toLocaleString('id-ID')}`) {
-          tombolProduk = element.querySelector('button');
-        }
-      });
-      return tombolProduk;
+    // ===== Validasi Nomor WhatsApp =====
+    function isValidWhatsApp(raw) {
+      if (!raw) return null;
+      let cleaned = raw.replace(/[\s()-\.]/g, '');
+      if (cleaned.startsWith('+')) cleaned = cleaned.slice(1);
+      if (cleaned.startsWith('0')) cleaned = '62' + cleaned.slice(1);
+      const match = cleaned.match(/^62(8[1-9][0-9]{6,12})$/);
+      return match ? '62' + match[1] : null;
     }
 
-    function isValidWhatsApp(number) {
-      // Hilangkan karakter selain angka
-      const cleanedNumber = number.replace(/\D/g, '');
+    const waInput = document.getElementById('whatsapp');
+    const waError = document.getElementById('waError');
+    const orderBtn = document.getElementById('orderBtn');
 
-      // Periksa panjang nomor
-      if (cleanedNumber.length < 10 || cleanedNumber.length > 13) {
-        return false;
+    function validateWAInput() {
+      const val = waInput.value.trim();
+      const normalized = isValidWhatsApp(val);
+      if (normalized) {
+        waError.classList.add('hidden');
+        orderBtn.disabled = false;
+        orderBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        waError.classList.remove('hidden');
+        orderBtn.disabled = true;
+        orderBtn.classList.add('opacity-50', 'cursor-not-allowed');
       }
-
-      // Periksa apakah semua karakter adalah angka
-      if (!/^\d+$/.test(cleanedNumber)) {
-        return false;
-      }
-
-      return true;
+      return normalized;
     }
+
+    waInput.addEventListener('input', validateWAInput);
+    validateWAInput();
 
     function kirimWhatsApp() {
-      const pembeliWA = document.getElementById("whatsapp").value.trim();
+      const pembeliRaw = document.getElementById("whatsapp").value.trim();
       const email = document.getElementById("email").value.trim();
+      const pembeliWA = isValidWhatsApp(pembeliRaw);
+      if (!pembeliWA) return alert("Nomor WhatsApp tidak valid!");
+      if (!email) return alert("Isi email terlebih dahulu!");
+      if (keranjang.length === 0) return alert("Keranjang masih kosong!");
 
-      if (!pembeliWA) {
-        alert("⚠️ Harap isi nomor WhatsApp!");
-        return;
-      }
-
-      if (!isValidWhatsApp(pembeliWA)) {
-        alert("⚠️ Nomor WhatsApp tidak valid. Harap masukkan nomor yang benar.");
-        return;
-      }
-
-      if (!email) {
-        alert("⚠️ Harap isi Email!");
-        return;
-      }
-
-      if (keranjang.length === 0) {
-        alert("🛒 Keranjang masih kosong!");
-        return;
-      }
-
-      let pesan = `Halo Admin!%0A%0A` + `Saya ingin memesan produk:%0A`;
-      let totalHarga = 0;
-      keranjang.forEach((item, i) => {
-        pesan += `${i + 1}. ${item.nama} - Rp ${item.harga.toLocaleString('id-ID')}%0A`;
-        totalHarga += item.harga;
+      let pesan = `Halo Admin!%0A%0ASaya ingin memesan:%0A`;
+      let total = 0;
+      keranjang.forEach((i, idx) => {
+        pesan += `${idx + 1}. ${i.nama} - Rp ${i.harga.toLocaleString('id-ID')}%0A`;
+        total += i.harga;
       });
-      pesan += `%0A💰 Total: Rp ${totalHarga.toLocaleString('id-ID')}%0A📱 WhatsApp: ${pembeliWA}%0A📧 Email: ${email}`;
-      window.open(`https://wa.me/${adminWA}?text=${pesan}`, "_blank");
+      pesan += `%0A💰 Total: Rp ${total.toLocaleString('id-ID')}%0A📧 ${email}%0A📱 ${pembeliRaw}`;
+      window.open(`https://wa.me/${pembeliWA}?text=${pesan}`, "_blank");
     }
 
-    function updateTombol(produk, tombol) {
-      if (produk.stok <= 0) {
-        tombol.textContent = "Stok Habis";
-        tombol.disabled = true;
-        tombol.style.background = "#ff4d4d";
-        tombol.style.color = "#fff";
-        tombol.style.cursor = "not-allowed";
-        tombol.style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.4)";
-      } else {
-        tombol.textContent = "Tambah";
-        tombol.disabled = false;
-        tombol.style.background = "#00c851";
-        tombol.style.color = "#fff";
-        tombol.style.cursor = "pointer";
-        tombol.style.boxShadow = "";
-      }
+    // ===== Invoice & Ulasan =====
+    function cekInvoice() {
+      const id = document.getElementById("invoice-id").value.trim();
+      const status = document.getElementById("status-invoice");
+      const data = { "INV-2023-123": "Lunas", "INV-2023-124": "Belum Dibayar", "INV-2023-125": "Dalam Proses" };
+      status.textContent = data[id] ? `Status Invoice ${id}: ${data[id]}` : "Invoice tidak ditemukan.";
     }
-    // Inisialisasi tombol saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-      const produkElements = document.querySelectorAll('.product');
-      produkElements.forEach((element, index) => {
-        const tombol = element.querySelector('button');
-        updateTombol(daftarProduk[index], tombol);
-      });
-    });
+
+    function tambahUlasan() {
+      const nama = document.getElementById('nama').value.trim();
+      const ulasan = document.getElementById('ulasan').value.trim();
+      const rating = document.querySelector('input[name="rating"]:checked');
+      if (!nama || !ulasan || !rating) return alert('Lengkapi semua kolom!');
+      const div = document.createElement('div');
+      div.className = 'bg-[#13294b] p-4 rounded-lg';
+      div.innerHTML = `<h3 class='font-bold'>${nama}</h3><div class='text-yellow-400'>${'★'.repeat(rating.value)}${'☆'.repeat(5 - rating.value)}</div><p class='text-gray-300'>${ulasan}</p>`;
+      document.getElementById('review-list').appendChild(div);
+      document.getElementById('nama').value = '';
+      document.getElementById('ulasan').value = '';
+      rating.checked = false;
+      alert('Terima kasih atas ulasannya!');
+    }
   </script>
 </body>
-
 </html>
