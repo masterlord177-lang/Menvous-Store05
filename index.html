@@ -3,336 +3,338 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MENVOUS STORE - FishIt Store</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            darkblue: '#0a1a2f',
-            lightgreen: '#00ff99',
-            greenhover: '#00e68a',
-          }
-        }
-      }
-    }
-  </script>
+  <title>MENVOUS STORE</title>
   <style>
-    section {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f1fff4;
+      color: #1a2e05;
+      display: flex;
+      min-height: 100vh;
     }
-    section:not(.hidden) {
-      opacity: 1;
-      transform: translateY(0);
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 200px;
+      background-color: #16a34a;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 10px;
+      transition: transform 0.3s ease;
+      color: white;
+    }
+    .sidebar h1 {
+      font-size: 1.4rem;
+      margin: 0 0 20px 10px;
+      font-weight: 700;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin: 4px 5px;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      background-color: #15803d;
+    }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    main section { display: none; }
+    main section.active { display: block; }
+
+    /* HEADER MOBILE */
+    header {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #16a34a;
+      padding: 10px 15px;
+      color: white;
+    }
+    .menu-btn { font-size: 1.6rem; cursor: pointer; }
+
+    /* CARD PRODUK */
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .card {
+      background-color: #dcfce7;
+      border-radius: 10px;
+      width: 150px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .card .title { font-weight: 600; text-align: center; color: #065f46; }
+    .card .subtitle { font-size: 0.8rem; color: #16a34a; margin-bottom: 12px; }
+    .card button {
+      background-color: #16a34a;
+      border: none;
+      padding: 8px 25px;
+      border-radius: 7px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .card button:hover { background-color: #15803d; }
+
+    /* PRODUK DETAIL */
+    .product-card {
+      background-color: #f0fdf4;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      max-width: 480px;
+    }
+    .product-card img {
+      width: 120px;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+    .product-description { font-size: 0.95rem; margin-bottom: 8px; }
+    .price { font-weight: 700; margin-bottom: 6px; }
+    .price mark { background: none; color: #16a34a; }
+    .stock { font-size: 0.9rem; }
+    .out-of-stock { color: #dc2626; font-weight: 700; }
+    .detail-btn {
+      background-color: #16a34a;
+      color: white;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      display: inline-block;
+      margin-top: 8px;
+    }
+    .detail-btn:hover { background-color: #15803d; }
+
+    /* CHECK INVOICE */
+    .check-form {
+      background-color: #dcfce7;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+    label { display: block; margin-bottom: 8px; font-weight: 600; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 7px;
+      border: none;
+      margin-bottom: 15px;
+      background-color: #f0fdf4;
+      color: #14532d;
+    }
+    .check-form button {
+      width: 100%;
+      background-color: #16a34a;
+      border: none;
+      padding: 12px;
+      color: white;
+      font-size: 1.1rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .check-form button:hover { background-color: #15803d; }
+  
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed; top: 0; left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+        z-index: 10;
+      }
+      .sidebar.show { transform: translateX(0); }
+      header { display: flex; position: fixed; top: 0; width: 100%; z-index: 9; }
+      main { margin-top: 60px; }
     }
   </style>
 </head>
-<body class="bg-darkblue text-white font-sans">
+<body>
 
-  <!-- Navbar -->
-  <header class="flex items-center justify-between p-4 border-b border-gray-700 bg-[#0d213a]">
-    <div class="flex items-center gap-2">
-      <div class="bg-lightgreen text-darkblue font-bold rounded-lg px-2 py-1 text-lg">M</div>
-      <span class="text-xl font-bold">MENVOUS STORE</span>
-    </div>
-    <button id="menuBtn" class="text-2xl md:hidden hover:text-lightgreen transition">☰</button>
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <h1>🌿 MENVOUS STORE</h1>
+    <a href="#" class="nav-link active" onclick="showSection('home', this)">🏠 HOME</a>
+    <a href="#" class="nav-link" onclick="showSection('invoice', this)">💳 CHECK INVOICE</a>
+    <a href="#" class="nav-link" onclick="showSection('fishit', this)">🎣 AKUN FISH IT</a>
+    <a href="#" class="nav-link" onclick="showSection('coin', this)">🪙 COIN FISH IT</a>
+    <a href="#" class="nav-link" onclick="showSection('secret', this)">🐟 SECRET TUMBAL</a>
+  </div>
+
+  <!-- HEADER MOBILE -->
+  <header>
+    <h2>MENVOUS STORE</h2>
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
   </header>
 
-  <!-- Sidebar -->
-  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#0d213a] shadow-2xl transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
-    <div class="p-5">
-      <div class="flex items-center gap-2 mb-6">
-        <div class="bg-lightgreen text-darkblue font-bold rounded-lg px-2 py-1 text-lg">M</div>
-        <h1 class="text-xl font-bold">MENVOUS STORE</h1>
-      </div>
-
-      <input type="text" placeholder="Cari..." class="w-full p-2 mb-4 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-lightgreen" />
-
-      <nav class="space-y-2">
-        <button onclick="tampilkanToko()" class="flex items-center gap-3 p-2 rounded-lg w-full text-left hover:bg-greenhover/20 transition">
-          <span class="text-lightgreen text-xl">🏠</span> Toko
-        </button>
-        <button onclick="tampilkanInvoice()" class="flex items-center gap-3 p-2 rounded-lg w-full text-left hover:bg-greenhover/20 transition">
-          <span class="text-lightgreen text-xl">🔍</span> Cek Invoice
-        </button>
-        <button onclick="tampilkanUlasan()" class="flex items-center gap-3 p-2 rounded-lg w-full text-left hover:bg-greenhover/20 transition">
-          <span class="text-lightgreen text-xl">⭐</span> Ulasan
-        </button>
-      </nav>
-    </div>
-  </aside>
-
-  <!-- Overlay -->
-  <div id="overlay" class="fixed inset-0 bg-black/60 hidden z-40"></div>
-
-  <!-- Main Content -->
-  <main class="md:ml-64 p-6">
-
-    <!-- TOKO SECTION -->
-    <section id="toko-section">
-      <h2 class="text-2xl font-bold mb-1 text-lightgreen">🔥POPULER SEKARANG!</h2>
-      <p class="text-gray-500 text-xs italic mb-4">Produk pilihan terbaik kami saat ini.</p>
-
-      <div id="produkGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-
-      <!-- Form Pembeli -->
-      <div class="bg-[#0d213a] p-5 rounded-xl mt-6">
-        <h2 class="text-xl font-bold text-lightgreen mb-3">✉️ Detail Kontak</h2>
-        <label>Email</label>
-        <input type="email" id="email" placeholder="contoh@gmail.com" class="w-full p-2 mb-3 rounded-lg text-black">
-        <label>Nomor WhatsApp Kamu</label>
-        <input type="tel" id="whatsapp" placeholder="08xxxxxxxxxx" class="w-full p-2 mb-2 rounded-lg text-black">
-        <p id="waError" class="text-red-400 text-xs mb-2 hidden">Nomor WA tidak valid. Gunakan format 08xxxxxxxx atau +628xxxxxxxx.</p>
-        <div class="bg-[#13294b] p-4 rounded-lg mb-3">
-          <h3 class="text-lg font-semibold mb-2 text-lightgreen">🛒 Keranjang Belanja</h3>
-          <div id="cartItems"></div>
-          <div id="cartTotal" class="font-bold mt-2 text-right">Total: Rp 0</div>
+  <!-- KONTEN -->
+  <main>
+    <!-- HOME -->
+    <section id="home" class="active">
+      <h2>KATEGORI PRODUK</h2>
+      <div class="cards-container">
+        <div class="card">
+          <img src="https://i.ibb.co.com/8Lmd6415/G4yz-Zqc-XUAA2-IBJ.jpg" alt="Akun Fish It">
+          <div class="title">🎣 AKUN FISH IT</div>
+          <div class="subtitle">AKUN GAME</div>
+          <button onclick="showSection('fishit')">BELI</button>
         </div>
-        <button id="orderBtn" onclick="kirimWhatsApp()" class="w-full bg-lightgreen hover:bg-greenhover text-darkblue font-bold py-2 rounded-lg transition">PESAN SEKARANG</button>
+        <div class="card">
+          <img src="https://i.ibb.co.com/s9CNYSCn/2173-png-1200.png" alt="Coin Fish It">
+          <div class="title">🪙 COIN FISH IT</div>
+          <div class="subtitle">COIN GAME</div>
+          <button onclick="showSection('coin')">BELI</button>
+        </div>
+        <div class="card">
+          <img src="https://i.ibb.co.com/B5W5D06c/Tumbal-Rahasia-di-Dermaga.png" alt="Secret Tumbal">
+          <div class="title">🔮 SECRET TUMBAL</div>
+          <div class="subtitle">PRODUK SPECIAL</div>
+          <button onclick="showSection('secret')">BELI</button>
+        </div>
       </div>
     </section>
 
-    <!-- INVOICE SECTION -->
-    <section id="invoice-section" class="hidden">
-      <h2 class="text-2xl font-bold mb-4 text-lightgreen">Cek Status Invoice</h2>
-      <input type="text" id="invoice-id" placeholder="Masukkan ID Invoice..." class="w-full p-2 mb-3 rounded-lg text-black">
-      <button onclick="cekInvoice()" class="bg-lightgreen hover:bg-greenhover text-darkblue font-bold px-4 py-2 rounded-lg">Cek Invoice</button>
-      <div id="status-invoice" class="mt-4 bg-[#13294b] p-3 rounded-lg">Status invoice akan muncul di sini.</div>
+    <!-- CHECK INVOICE -->
+    <section id="invoice">
+      <h2>Check Invoice</h2>
+      <form class="check-form" onsubmit="checkInvoice(); return false;">
+        <label for="invoice-code">Masukkan Kode Invoice</label>
+        <input type="text" id="invoice-code" placeholder="Contoh: PP165xxxx" required>
+        <button type="submit">Cek Invoice</button>
+      </form>
+      <p id="invoice-result" style="font-weight:600; margin-top:10px;"></p>
     </section>
 
-    <!-- ULASAN SECTION -->
-    <section id="review-section" class="hidden">
-      <h2 class="text-2xl font-bold mb-4 text-lightgreen">Ulasan Pelanggan</h2>
-      <div id="review-list" class="space-y-4 mb-6">
-        <div class="bg-[#13294b] p-4 rounded-lg">
-          <h3 class="font-bold">BOKIRE</h3>
-          <div class="text-yellow-400">★★★★★</div>
-          <p class="text-gray-300">Produknya bagus dan pelayanannya cepat!</p>
-        </div>
-      </div>
+    <!-- AKUN FISH IT -->
+    <section id="fishit">
+      <h2>🎣 AKUN FISH IT</h2>
+      <div id="produk-container"></div>
+    </section>
 
-      <div class="bg-[#0d213a] p-5 rounded-xl">
-        <h3 class="text-xl font-bold text-lightgreen mb-3">Berikan Ulasan Anda</h3>
-        <input type="text" id="nama" placeholder="Nama Anda" class="w-full p-2 mb-3 rounded-lg text-black">
-        <label>Rating:</label>
-        <div class="flex flex-row-reverse text-2xl mb-3">
-          <input type="radio" id="star5" name="rating" value="5" class="hidden" />
-          <label for="star5" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
-          <input type="radio" id="star4" name="rating" value="4" class="hidden" />
-          <label for="star4" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
-          <input type="radio" id="star3" name="rating" value="3" class="hidden" />
-          <label for="star3" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
-          <input type="radio" id="star2" name="rating" value="2" class="hidden" />
-          <label for="star2" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
-          <input type="radio" id="star1" name="rating" value="1" class="hidden" />
-          <label for="star1" class="cursor-pointer text-gray-400 hover:text-yellow-400">★</label>
-        </div>
-        <textarea id="ulasan" rows="4" placeholder="Tulis ulasan Anda..." class="w-full p-2 mb-3 rounded-lg text-black"></textarea>
-        <button onclick="tambahUlasan()" class="bg-lightgreen hover:bg-greenhover text-darkblue font-bold px-4 py-2 rounded-lg">Kirim Ulasan</button>
-      </div>
+    <!-- COIN FISH IT -->
+    <section id="coin">
+      <h2>🪙 COIN FISH IT</h2>
+      <div id="coin-container"></div>
+    </section>
+
+    <!-- SECRET TUMBAL -->
+    <section id="secret">
+      <h2>🐟 SECRET TUMBAL</h2>
+      <div id="secret-container"></div>
     </section>
   </main>
 
-  <footer class="text-center p-4 border-t border-gray-700 mt-6 text-gray-400">
-    © 2025 MENVOUS STORE | All Rights Reserved
-  </footer>
-
   <script>
-    // ===== Sidebar Control =====
-    const sidebar = document.getElementById('sidebar');
-    const menuBtn = document.getElementById('menuBtn');
-    const overlay = document.getElementById('overlay');
-    menuBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('-translate-x-full');
-      overlay.classList.toggle('hidden');
-    });
-    overlay.addEventListener('click', () => {
-      sidebar.classList.add('-translate-x-full');
-      overlay.classList.add('hidden');
-    });
-
-    // ===== Data Produk =====
-    const daftarProduk = [
-      { nama: 'AKUN ELEMENT', harga: 200000, stok: 1 },
-      { nama: 'AKUN GHOSTFINN', harga: 55000, stok: 1 },
-      { nama: 'AKUN GHOSTFINN', harga: 50000, stok: 1 },
-      { nama: 'AKUN BAMBOO', harga: 45000, stok: 1 },
-      { nama: 'AKUN ANGLER', harga: 40000, stok: 1 },
-      { nama: 'AKUN ARES', harga: 35000, stok: 1 },
-      { nama: 'AKUN HAZMAT', harga: 30000, stok: 1 },
-      { nama: 'AKUN ASTRAL', harga: 30000, stok: 1 },
-      { nama: 'AKUN COIN FISH IT', harga: 20000, stok: 1 },
-      { nama: 'SECRET TUMBAL', harga: 7000, stok: 0 }
+    const produkList = [
+      { nama: "[DATVER] AKUN ELEMENT ROD + SINGULARITY", harga: 250000, stok: 1, terjual: 16, gambar: "https://i.ibb.co.com/spcbRXy4/element.jpg" },
+      { nama: "[NOEMAIL] AKUN ELEMENT ROD POLOS", harga: 200000, stok: 0, terjual: 8, gambar: "https://i.ibb.co/HDTzDZv9/images.jpg" },
+      { nama: "[NOEMAIL] AKUN GHOSTFIN ROD + SINGULARITY", harga: 60000, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/20r947k0/ghostfinnn.jpg" },
+      { nama: "[NOEMAIL] AKUN GHOSTFIN ROD POLOS", harga: 57500, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/23GVVkh7/ghostfinn.jpg" },
+      { nama: "[NOEMAIL] AKUN BAMBOO ROD + SINGULARITY", harga: 55000, stok: 0, terjual: 8, gambar: "https://i.ibb.co/q3G1vhTp/20251110-035841.jpg" },
+      { nama: "[NOEMAIL] Akun BAMBOO ROD POLOS", harga: 52500, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/4gj6qBVH/bamboo.jpg" },
+      { nama: "[NOEMAIL] AKUN ANGLER + SINGULARITY", harga: 45000, stok: 0, terjual: 8, gambar: "https://i.ibb.co/Mk0ZkQV0/20251110-035822.jpg" },
+      { nama: "[NOEMAIL] AKUN ANGLER ROD POLOS", harga: 40000, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/S7rWzkk6/angler.jpg" },
+      { nama: "[NOEMAIL] AKUN ARES + SINGULARITY", harga: 37500, stok: 0, terjual: 8, gambar: "https://i.ibb.co/KjQZyvZz/20251110-035750.jpg" },
+      { nama: "[NOEMAIL] AKUN ARES ROD POLOS", harga: 35000, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/Y79R0hbc/ares.jpg" },
+      { nama: "[NOEMAIL] AKUN HAZMAT ROD POLOS", harga: 30000, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/Kjv6YzCq/hazmat.jpg" },
+      { nama: "[NOEMAIL] Akun ASTRAL ROD POLOS", harga: 30000, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/Tx3zDpvk/astral.jpg" },
     ];
-    const keranjang = [];
-    const adminWA = "6282364492977";
 
-    const produkGrid = document.getElementById("produkGrid");
-    daftarProduk.forEach((p) => {
-      const div = document.createElement("div");
-      div.className = "bg-[#0d213a] rounded-xl p-3 shadow hover:shadow-lg transition";
-      div.innerHTML = `
-        <img src="https://dummyimage.com/200x120/c8f9d2/007f3d" class="w-full rounded-lg mb-2">
-        <h3 class="text-lightgreen font-bold">${p.nama}</h3>
-        <p class="text-gray-300 mb-2">Rp ${p.harga.toLocaleString('id-ID')}</p>
-        <button onclick="tambahKeranjang('${p.nama}', ${p.harga}, this)" class="bg-lightgreen text-darkblue font-bold px-3 py-1 rounded-lg hover:bg-greenhover transition">Tambah</button>
-      `;
-      produkGrid.appendChild(div);
-    });
+    const coinList = [
+      { nama: "1M COIN FISH IT (VIA SECRET)", harga: 45000, stok: 5, terjual: 20, gambar: "https://i.ibb.co/YY4Ms1z/download.png" },
+      { nama: "1M COIN FISH IT (VIA MITOS)", harga: 20000, stok: 3, terjual: 10, gambar: "https://i.ibb.co/HDTzDZv9/images.jpg" },
+    ];
 
-    // ===== Navigasi Section =====
-    function tampilkanToko() {
-      setActive(0);
-      document.getElementById("toko-section").classList.remove("hidden");
-      document.getElementById("invoice-section").classList.add("hidden");
-      document.getElementById("review-section").classList.add("hidden");
-    }
-    function tampilkanInvoice() {
-      setActive(1);
-      document.getElementById("toko-section").classList.add("hidden");
-      document.getElementById("invoice-section").classList.remove("hidden");
-      document.getElementById("review-section").classList.add("hidden");
-    }
-    function tampilkanUlasan() {
-      setActive(2);
-      document.getElementById("toko-section").classList.add("hidden");
-      document.getElementById("invoice-section").classList.add("hidden");
-      document.getElementById("review-section").classList.remove("hidden");
-    }
-    function setActive(index) {
-      document.querySelectorAll("aside nav button").forEach((btn, i) => {
-        btn.classList.remove("bg-greenhover/20");
-        if (i === index) btn.classList.add("bg-greenhover/20");
-      });
-    }
+    const secretList = [
+      { nama: "SECRET TUMBAL SULTAN", harga: 15000, stok: 2, terjual: 5, gambar: "https://i.ibb.co.com/LfZB8q1/Screenshot-20251110-101845-Roblox.jpg" },
+      { nama: "SECRET TUMBAL", harga: 7000, stok: 0, terjual: 8, gambar: "https://i.ibb.co.com/39C83X68/Screenshot-20251110-102006-Roblox.jpg" },
+    ];
 
-    // ===== Keranjang =====
-    function tambahKeranjang(nama, harga, tombol) {
-      const produk = daftarProduk.find(p => p.nama === nama && p.harga === harga);
-      if (!produk || produk.stok <= 0) return alert("Stok habis!");
-      const item = keranjang.find(i => i.nama === nama);
-      if (item) return alert("Produk ini sudah ada di keranjang!");
-
-      keranjang.push({ nama, harga });
-      produk.stok--;
-      updateKeranjang();
-      if (produk.stok <= 0) {
-        tombol.textContent = "Stok Habis";
-        tombol.disabled = true;
-        tombol.classList.replace("bg-lightgreen", "bg-red-500");
-      }
-    }
-
-    function updateKeranjang() {
-      const list = document.getElementById("cartItems");
-      const total = document.getElementById("cartTotal");
-      list.innerHTML = "";
-      let totalHarga = 0;
-      keranjang.forEach((item, index) => {
-        totalHarga += item.harga;
-        const div = document.createElement("div");
-        div.className = "flex justify-between mb-1";
-        div.innerHTML = `
-          <span>${item.nama}</span>
-          <span>Rp ${item.harga.toLocaleString('id-ID')}</span>
-          <button onclick="hapusItem(${index})" class="text-red-400 hover:text-red-600">❌</button>
+    function tampilkanProduk(list, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      list.forEach(p => {
+        const isHabis = p.stok <= 0;
+        container.innerHTML += `
+          <div class="product-card">
+            <img src="${p.gambar}" alt="${p.nama}">
+            <div>
+              <p class="product-description">${p.nama}</p>
+              <p class="price">Rp <mark>${p.harga.toLocaleString()}</mark></p>
+              <p class="stock">Stok: ${isHabis ? `<span class='out-of-stock'>Habis</span>` : p.stok}</p>
+              <p>${p.terjual} Terjual</p>
+              <a href="https://wa.me/6282364492977?text=Halo%20Admin,%20saya%20ingin%20pesan%20${encodeURIComponent(p.nama)}" class="detail-btn" target="_blank">Pesan Sekarang</a>
+            </div>
+          </div>
         `;
-        list.appendChild(div);
       });
-      total.textContent = `Total: Rp ${totalHarga.toLocaleString('id-ID')}`;
     }
 
-    function hapusItem(index) {
-      const item = keranjang[index];
-      const produk = daftarProduk.find(p => p.nama === item.nama && p.harga === item.harga);
-      if (produk) produk.stok++;
-      document.querySelectorAll("#produkGrid button").forEach(btn => {
-        const namaProduk = btn.parentElement.querySelector("h3").textContent;
-        if (namaProduk === produk.nama) {
-          btn.textContent = "Tambah";
-          btn.disabled = false;
-          btn.classList.replace("bg-red-500", "bg-lightgreen");
-        }
-      });
-      keranjang.splice(index, 1);
-      updateKeranjang();
-    }
-
-    // ===== Validasi Nomor WhatsApp =====
-    function isValidWhatsApp(raw) {
-      if (!raw) return null;
-      let cleaned = raw.replace(/[\s()-\.]/g, '');
-      if (cleaned.startsWith('+')) cleaned = cleaned.slice(1);
-      if (cleaned.startsWith('0')) cleaned = '62' + cleaned.slice(1);
-      const match = cleaned.match(/^62(8[1-9][0-9]{6,12})$/);
-      return match ? '62' + match[1] : null;
-    }
-
-    const waInput = document.getElementById('whatsapp');
-    const waError = document.getElementById('waError');
-    const orderBtn = document.getElementById('orderBtn');
-
-    function validateWAInput() {
-      const val = waInput.value.trim();
-      const normalized = isValidWhatsApp(val);
-      if (normalized) {
-        waError.classList.add('hidden');
-        orderBtn.disabled = false;
-        orderBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-      } else {
-        waError.classList.remove('hidden');
-        orderBtn.disabled = true;
-        orderBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    function checkInvoice() {
+      const code = document.getElementById("invoice-code").value.trim();
+      const result = document.getElementById("invoice-result");
+      if (!code) {
+        result.textContent = "⚠️ Silakan masukkan kode invoice terlebih dahulu.";
+        result.style.color = "#dc2626";
+        return;
       }
-      return normalized;
+      result.style.color = "#065f46";
+      result.textContent = `✅ Invoice ${code} ditemukan. Silakan hubungi admin untuk konfirmasi lebih lanjut.`;
     }
 
-    waInput.addEventListener('input', validateWAInput);
-    validateWAInput();
-
-    function kirimWhatsApp() {
-      const pembeliRaw = document.getElementById("whatsapp").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const pembeliWA = isValidWhatsApp(pembeliRaw);
-      if (!pembeliWA) return alert("Nomor WhatsApp tidak valid!");
-      if (!email) return alert("Isi email terlebih dahulu!");
-      if (keranjang.length === 0) return alert("Keranjang masih kosong!");
-
-      let pesan = `Halo Admin!%0A%0ASaya ingin memesan:%0A`;
-      let total = 0;
-      keranjang.forEach((i, idx) => {
-        pesan += `${idx + 1}. ${i.nama} - Rp ${i.harga.toLocaleString('id-ID')}%0A`;
-        total += i.harga;
-      });
-      pesan += `%0A💰 Total: Rp ${total.toLocaleString('id-ID')}%0A📧 ${email}%0A📱 ${pembeliRaw}`;
-      window.open(`https://wa.me/${pembeliWA}?text=${pesan}`, "_blank");
+    function showSection(id, el) {
+      document.querySelectorAll("main section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll(".nav-link").forEach(a => a.classList.remove("active"));
+      if (el) el.classList.add("active");
+      if (window.innerWidth <= 768 && el ) toggleSidebar();
+      if (id === 'fishit') tampilkanProduk(produkList, 'produk-container');
+      if (id === 'coin') tampilkanProduk(coinList, 'coin-container');
+      if (id === 'secret') tampilkanProduk(secretList, 'secret-container');
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // ===== Invoice & Ulasan =====
-    function cekInvoice() {
-      const id = document.getElementById("invoice-id").value.trim();
-      const status = document.getElementById("status-invoice");
-      const data = { "INV-2023-123": "Lunas", "INV-2023-124": "Belum Dibayar", "INV-2023-125": "Dalam Proses" };
-      status.textContent = data[id] ? `Status Invoice ${id}: ${data[id]}` : "Invoice tidak ditemukan.";
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("show");
     }
 
-    function tambahUlasan() {
-      const nama = document.getElementById('nama').value.trim();
-      const ulasan = document.getElementById('ulasan').value.trim();
-      const rating = document.querySelector('input[name="rating"]:checked');
-      if (!nama || !ulasan || !rating) return alert('Lengkapi semua kolom!');
-      const div = document.createElement('div');
-      div.className = 'bg-[#13294b] p-4 rounded-lg';
-      div.innerHTML = `<h3 class='font-bold'>${nama}</h3><div class='text-yellow-400'>${'★'.repeat(rating.value)}${'☆'.repeat(5 - rating.value)}</div><p class='text-gray-300'>${ulasan}</p>`;
-      document.getElementById('review-list').appendChild(div);
-      document.getElementById('nama').value = '';
-      document.getElementById('ulasan').value = '';
-      rating.checked = false;
-      alert('Terima kasih atas ulasannya!');
-    }
+    tampilkanProduk(produkList, 'produk-container');
+    tampilkanProduk(coinList, 'coin-container');
+    tampilkanProduk(secretList, 'secret-container');
   </script>
+
 </body>
 </html>
