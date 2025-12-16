@@ -335,6 +335,12 @@
     tampilkanProduk(coinList, 'coin-container');
     tampilkanProduk(secretList, 'secret-container');
   </script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  const supabaseUrl = "https://xwshotembntucipxqbms.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3c2hvdGVtYm50dWNpcHhxYm1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NjgwOTgsImV4cCI6MjA4MTQ0NDA5OH0.6-k6KP2VqSAaWJIuW4XhH7pZrS7CbgfsOpWlGNhQOTU";
 
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
 </body>
 </html>
